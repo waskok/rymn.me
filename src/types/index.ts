@@ -1,0 +1,32 @@
+import type { ComponentType, SVGProps } from 'react';
+
+/** Shape shared by every icon we render, whether from lucide-react or hand-drawn. */
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+
+/** A single destination the hub can redirect a visitor to. */
+export interface PortfolioGateway {
+  id: string;
+  index: string;
+  title: string;
+  headline: string;
+  description: string;
+  icon: IconComponent;
+  url: string;
+  tags: readonly string[];
+  /** True while the dedicated portfolio isn't live yet — disables navigation and shows a "soon" state. */
+  comingSoon?: boolean;
+}
+
+/** A social / contact link rendered in the header and footer. */
+export interface SocialLink {
+  id: string;
+  label: string;
+  href: string;
+  icon: IconComponent;
+}
+
+export interface StatItem {
+  id: string;
+  value: string;
+  label: string;
+}
