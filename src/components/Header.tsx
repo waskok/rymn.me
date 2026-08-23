@@ -23,11 +23,10 @@ function StatusPill() {
 function SupportButton({ className = '', onClick }: { className?: string; onClick?: () => void }) {
   return (
     <a
-      href="#"
-      onClick={(event) => {
-        preventDefault(event);
-        onClick?.();
-      }}
+      href="https://buycoffee.to/rymn"
+      target="_blank"
+      rel="noreferrer"
+      onClick={onClick}
       className={`relative isolate flex items-center gap-2 overflow-visible rounded-full border border-white/15 font-medium text-white/80 transition-colors hover:border-white/30 hover:text-white ${className}`}
     >
       <span
