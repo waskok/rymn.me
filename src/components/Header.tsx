@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Coffee, Menu, X } from 'lucide-react';
 import { Magnetic } from './Magnetic';
-import { scrollToTop } from '../lib/scrollToTop';
+import { useLogoClick } from '../lib/useLogoClick';
 import { preventDefault } from '../lib/preventDefault';
 import { easeOut } from '../lib/motion';
 
@@ -42,6 +43,7 @@ function SupportButton({ className = '', onClick }: { className?: string; onClic
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleLogoClick = useLogoClick();
 
   const { scrollY } = useScroll();
   const borderOpacity = useTransform(scrollY, [0, 120], [0, 0.12]);
@@ -59,13 +61,13 @@ export function Header() {
     >
       <div className="flex items-center justify-between gap-2 px-4 py-5 sm:gap-3 sm:px-10 sm:py-8">
         <Magnetic strength={0.35} className="inline-block shrink-0">
-          <a
-            href="#top"
-            onClick={scrollToTop}
+          <Link
+            to="/"
+            onClick={handleLogoClick}
             className="font-display block cursor-pointer text-xl font-semibold tracking-tight text-white sm:text-2xl"
           >
             rymn<span className="text-white/40">.me</span>
-          </a>
+          </Link>
         </Magnetic>
 
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
@@ -74,13 +76,12 @@ export function Header() {
           <div className="hidden items-center gap-3 sm:flex">
             <SupportButton className="px-4 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm" />
 
-            <a
-              href="#"
-              onClick={preventDefault}
+            <Link
+              to="/kontakt"
               className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition-transform duration-200 hover:scale-105 sm:px-5 sm:py-2.5 sm:text-sm"
             >
               Skontaktuj się
-            </a>
+            </Link>
           </div>
 
           <button
@@ -105,16 +106,13 @@ export function Header() {
             className="overflow-hidden border-t border-white/10 sm:hidden"
           >
             <div className="flex flex-col gap-4 px-4 py-6">
-              <a
-                href="#"
-                onClick={(event) => {
-                  preventDefault(event);
-                  setIsMenuOpen(false);
-                }}
+              <Link
+                to="/kontakt"
+                onClick={() => setIsMenuOpen(false)}
                 className="rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-black"
               >
                 Skontaktuj się
-              </a>
+              </Link>
 
               <SupportButton
                 className="justify-center px-4 py-3 text-sm"
