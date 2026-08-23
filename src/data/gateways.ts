@@ -1,5 +1,5 @@
 import { Code2, Clapperboard, Mail } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '../components/icons';
+import { GithubIcon, DiscordIcon } from '../components/icons';
 import type { PortfolioGateway, SocialLink, StatItem } from '../types';
 
 /**
@@ -35,9 +35,15 @@ export const gateways: readonly PortfolioGateway[] = [
 ] as const;
 
 export const socials: readonly SocialLink[] = [
-  { id: 'github', label: 'GitHub', href: 'https://github.com/waskok', icon: GithubIcon },
-  { id: 'linkedin', label: 'LinkedIn', href: 'https://linkedin.com/in/rymn', icon: LinkedinIcon },
-  { id: 'mail', label: 'E-mail', href: 'mailto:kontakt.rymn@gmail.com', icon: Mail },
+  { id: 'github', label: 'GitHub', href: 'https://github.com/waskok', icon: GithubIcon, showLabel: true },
+  {
+    id: 'discord',
+    label: 'rymn_',
+    href: 'discord://-/users/410434333686497281',
+    icon: DiscordIcon,
+    showLabel: true,
+  },
+  { id: 'mail', label: 'kontakt.rymn@gmail.com', href: 'mailto:kontakt.rymn@gmail.com', icon: Mail, showLabel: true },
 ] as const;
 
 export const stats: readonly StatItem[] = [

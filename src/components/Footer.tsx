@@ -16,17 +16,18 @@ export function Footer({ socials }: FooterProps) {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="relative z-20 mx-auto flex max-w-5xl flex-col items-center gap-4 px-6 py-10 text-center sm:flex-row sm:justify-between sm:px-10 sm:text-left"
+      className="relative z-20 mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-10 sm:px-10"
     >
-      <a
-        href="#top"
-        onClick={scrollToTop}
-        className="font-display cursor-pointer text-sm font-semibold tracking-tight text-white transition-opacity duration-200 hover:opacity-70"
-      >
-        rymn<span className="text-white/40">.me</span>
-      </a>
-
-      <p className="text-xs text-white/30">© {year} — Wszelkie prawa zastrzeżone.</p>
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-white/30">© {year}</span>
+        <a
+          href="#top"
+          onClick={scrollToTop}
+          className="font-display cursor-pointer text-sm font-semibold tracking-tight text-white transition-opacity duration-200 hover:opacity-70"
+        >
+          rymn<span className="text-white/40">.me</span>
+        </a>
+      </div>
 
       <div className="flex items-center gap-1">
         {socials.map((social) => (
@@ -38,13 +39,11 @@ export function Footer({ socials }: FooterProps) {
               aria-label={social.label}
               className="flex h-8 w-8 items-center justify-center rounded-full text-white/40 transition-colors hover:text-white"
             >
-              <social.icon className="h-3.5 w-3.5" strokeWidth={1.75} />
+              <social.icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
             </a>
           </Magnetic>
         ))}
       </div>
-
-      <p className="text-xs text-white/30">Zaprojektowane i zbudowane w Polsce.</p>
     </motion.footer>
   );
 }
