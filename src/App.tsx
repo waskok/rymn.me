@@ -19,7 +19,7 @@ function App() {
       <CursorGlow />
 
       <div className="relative flex min-h-screen flex-col">
-        <Header socials={socials} />
+        <Header />
         <Hero stats={stats} />
         <Gateways gateways={gateways} />
         <Marquee tags={marqueeTags} />

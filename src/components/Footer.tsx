@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import type { SocialLink } from '../types';
 import { Magnetic } from './Magnetic';
 import { scrollToTop } from '../lib/scrollToTop';
+import { preventDefault } from '../lib/preventDefault';
 
 interface FooterProps {
   socials: readonly SocialLink[];
@@ -16,7 +17,7 @@ export function Footer({ socials }: FooterProps) {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="relative z-20 mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-10 sm:px-10"
+      className="relative z-20 mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 py-10 text-center sm:flex-row sm:justify-between sm:text-left sm:px-10"
     >
       <div className="flex items-center gap-2">
         <span className="text-xs text-white/30">© {year}</span>
@@ -29,7 +30,16 @@ export function Footer({ socials }: FooterProps) {
         </a>
       </div>
 
-      <div className="flex items-center gap-1">
+      <a
+        href="#"
+        onClick={preventDefault}
+        className="group relative text-xs text-white/30 transition-colors hover:text-white/60"
+      >
+        Polityka prywatności
+        <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+      </a>
+
+      <div className="flex flex-wrap items-center justify-center gap-2">
         {socials.map((social) => (
           <Magnetic key={social.id} strength={0.5}>
             <a
@@ -37,9 +47,10 @@ export function Footer({ socials }: FooterProps) {
               target={social.href.startsWith('http') ? '_blank' : undefined}
               rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
               aria-label={social.label}
-              className="flex h-8 w-8 items-center justify-center rounded-full text-white/40 transition-colors hover:text-white"
+              className="flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-white/50 transition-colors hover:border-white/20 hover:text-white"
             >
               <social.icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+              <span className="text-xs font-medium">{social.label}</span>
             </a>
           </Magnetic>
         ))}
