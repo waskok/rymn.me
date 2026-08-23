@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Coffee, Menu, X } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useLogoClick } from '../lib/useLogoClick';
-import { preventDefault } from '../lib/preventDefault';
 import { easeOut } from '../lib/motion';
 
 function StatusPill() {
