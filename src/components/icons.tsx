@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-/** Hand-drawn Discord glyph — lucide-react ships no brand icons. */
+/** Hand-drawn Discord glyph - lucide-react ships no brand icons. */
 export function DiscordIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -9,7 +9,7 @@ export function DiscordIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** Hand-drawn GitHub glyph — lucide-react ships no brand icons. */
+/** Hand-drawn GitHub glyph - lucide-react ships no brand icons. */
 export function GithubIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg

@@ -14,7 +14,7 @@ export const gateways: readonly PortfolioGateway[] = [
     title: 'Web Development',
     headline: 'Strony, które ładują się szybko i wyglądają świetnie.',
     description:
-      'Nowoczesne, responsywne strony internetowe front-end budowane w React i Tailwind CSS — od projektu po wdrożenie.',
+      'Nowoczesne, responsywne strony internetowe front-end budowane w React i Tailwind CSS - od projektu po wdrożenie.',
     icon: Code2,
     url: 'https://dev.rymn.me',
     tags: ['React', 'TypeScript', 'Tailwind CSS'],
@@ -26,7 +26,7 @@ export const gateways: readonly PortfolioGateway[] = [
     title: 'Montaż wideo',
     headline: 'Treści, które przyciągają uwagę od pierwszej sekundy.',
     description:
-      'Dynamiczny montaż na YouTube i Shorts — krótkie, angażujące formy wideo skrojone pod social media.',
+      'Dynamiczny montaż na YouTube i Shorts - krótkie, angażujące formy wideo skrojone pod social media.',
     icon: Clapperboard,
     url: 'https://video.rymn.me',
     tags: ['YouTube', 'Shorts', 'Social Media'],

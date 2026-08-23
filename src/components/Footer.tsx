@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import type { SocialLink } from '../types';
 import { Magnetic } from './Magnetic';
-import { scrollToTop } from '../lib/scrollToTop';
-import { preventDefault } from '../lib/preventDefault';
+import { useLogoClick } from '../lib/useLogoClick';
 
 interface FooterProps {
   socials: readonly SocialLink[];
@@ -10,6 +10,7 @@ interface FooterProps {
 
 export function Footer({ socials }: FooterProps) {
   const year = new Date().getFullYear();
+  const handleLogoClick = useLogoClick();
 
   return (
     <motion.footer
@@ -21,23 +22,22 @@ export function Footer({ socials }: FooterProps) {
     >
       <div className="flex items-center gap-2">
         <span className="text-xs text-white/30">© {year}</span>
-        <a
-          href="#top"
-          onClick={scrollToTop}
+        <Link
+          to="/"
+          onClick={handleLogoClick}
           className="font-display cursor-pointer text-sm font-semibold tracking-tight text-white transition-opacity duration-200 hover:opacity-70"
         >
           rymn<span className="text-white/40">.me</span>
-        </a>
+        </Link>
       </div>
 
-      <a
-        href="#"
-        onClick={preventDefault}
+      <Link
+        to="/polityka-prywatnosci"
         className="group relative text-xs text-white/30 transition-colors hover:text-white/60"
       >
         Polityka prywatności
         <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
-      </a>
+      </Link>
 
       <div className="flex flex-wrap items-center justify-center gap-2">
         {socials.map((social) => (
