@@ -5,7 +5,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { socials } from '../data/gateways';
 
-/** Shared page shell — background, header and footer stay mounted across routes. */
+/** Shared page shell - background, header and footer stay mounted across routes. */
 export function Layout() {
   return (
     <div id="top" className="relative min-h-screen bg-void-950 font-sans text-white selection:bg-white/20">

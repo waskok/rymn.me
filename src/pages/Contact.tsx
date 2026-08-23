@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { easeOut } from '../lib/motion';
 
-/** Placeholder — the contact form/details will land here. */
+/** Placeholder - the contact form/details will land here. */
 export function Contact() {
   return (
     <motion.section
@@ -15,7 +15,7 @@ export function Contact() {
         Ta strona jest w budowie.
       </h1>
       <p className="mt-4 max-w-xl text-balance text-white/50">
-        Wkrótce pojawi się tu formularz kontaktowy. W międzyczasie napisz do mnie bezpośrednio —
+        Wkrótce pojawi się tu formularz kontaktowy. W międzyczasie napisz do mnie bezpośrednio -
         linki znajdziesz w stopce.
       </p>
     </motion.section>
