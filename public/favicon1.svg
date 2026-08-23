@@ -1,0 +1,38 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#222222"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <linearGradient id="metal" x1="256" y1="100" x2="256" y2="412" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f2f2f2"/>
+      <stop offset="0.45" stop-color="#b8b8b8"/>
+      <stop offset="1" stop-color="#4a4a4a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- left bracket -->
+  <path
+    d="M118 118 L248 256 L118 394 L158 394 L268 278 L268 234 L158 118 Z"
+    fill="url(#metal)"
+  />
+
+  <!-- right bracket -->
+  <path
+    d="M394 118 L264 256 L394 394 L354 394 L244 278 L244 234 L354 118 Z"
+    fill="url(#metal)"
+  />
+
+  <!-- r -->
+  <text
+    x="256"
+    y="318"
+    font-family="Inter, Arial, Helvetica, sans-serif"
+    font-size="188"
+    font-weight="700"
+    fill="#ffffff"
+    text-anchor="middle"
+  >r</text>
+</svg>

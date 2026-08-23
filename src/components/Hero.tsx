@@ -48,13 +48,12 @@ export function Hero({ stats }: HeroProps) {
         variants={item}
         className="mt-6 max-w-xl text-balance text-base leading-relaxed text-white/50 sm:text-lg"
       >
-        Pracuję jako niezależny freelancer, w pełni skupiony na jednym
-        projekcie na raz. Poniżej zobaczysz kierunki, w których się rozwijam.
+        Pracuję jako niezależny freelancer, w pełni skupiony na każdym projekcie. Poniżej zobaczysz kierunki, w których się rozwijam.
       </motion.p>
 
       <motion.div
         variants={item}
-        className="mt-10 flex w-full flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/10 pt-8"
+        className="mt-10 flex w-full flex-wrap items-center gap-x-6 gap-y-4 border-t border-white/10 pt-8 sm:gap-x-10"
       >
         {stats.map((stat) => (
           <div key={stat.id} className="flex flex-col">
@@ -64,10 +63,16 @@ export function Hero({ stats }: HeroProps) {
             <span className="text-xs text-white/40">{stat.label}</span>
           </div>
         ))}
-        <div className="ml-auto hidden items-center gap-2 text-xs text-white/30 sm:flex">
+        <button
+          type="button"
+          onClick={() =>
+            document.getElementById('gateways')?.scrollIntoView({ behavior: 'smooth' })
+          }
+          className="ml-auto flex cursor-pointer items-center gap-2 text-xs text-white/30 transition-colors hover:text-white/60"
+        >
           <ArrowDown className="h-3.5 w-3.5 animate-bounce" strokeWidth={1.75} />
           Sprawdź poniżej
-        </div>
+        </button>
       </motion.div>
     </motion.section>
   );

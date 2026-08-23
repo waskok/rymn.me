@@ -23,6 +23,8 @@ export interface SocialLink {
   label: string;
   href: string;
   icon: IconComponent;
+  /** When true, renders the label text next to the icon (e.g. "GitHub"). */
+  showLabel?: boolean;
 }
 
 export interface StatItem {
