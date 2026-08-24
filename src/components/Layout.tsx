@@ -17,9 +17,9 @@ export function Layout() {
 
         <div className="relative flex min-h-screen flex-col">
           <Header />
-          <div className="flex-1">
+          <main className="flex-1">
             <Outlet />
-          </div>
+          </main>
           <Footer socials={socials} />
         </div>
 

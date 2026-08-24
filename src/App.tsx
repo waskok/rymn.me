@@ -1,9 +1,17 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
-import { Contact } from './pages/Contact';
-import { PrivacyPolicy } from './pages/PrivacyPolicy';
-import { Terms } from './pages/Terms';
+
+const Contact = lazy(() =>
+  import('./pages/Contact').then((module) => ({ default: module.Contact })),
+);
+const PrivacyPolicy = lazy(() =>
+  import('./pages/PrivacyPolicy').then((module) => ({ default: module.PrivacyPolicy })),
+);
+const Terms = lazy(() =>
+  import('./pages/Terms').then((module) => ({ default: module.Terms })),
+);
 
 /**
  * Personal hub for rymn.me. The home view has one job: introduce me in a
@@ -12,14 +20,16 @@ import { Terms } from './pages/Terms';
  */
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="kontakt" element={<Contact />} />
-        <Route path="polityka-prywatnosci" element={<PrivacyPolicy />} />
-        <Route path="regulamin" element={<Terms />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="kontakt" element={<Contact />} />
+          <Route path="polityka-prywatnosci" element={<PrivacyPolicy />} />
+          <Route path="regulamin" element={<Terms />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 
