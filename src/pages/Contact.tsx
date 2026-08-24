@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, type FocusEvent, type FormEvent } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { AlertCircle, Check, Send } from 'lucide-react';
+import { AlertCircle, Check, Loader2, Send } from 'lucide-react';
 import { easeOut } from '../lib/motion';
 import { socials } from '../data/gateways';
 
@@ -17,6 +17,13 @@ type RequiredField = 'name' | 'email' | 'message';
 
 const initialForm: ContactFormState = { name: '', email: '', phone: '', message: '' };
 const initialTouched: Record<RequiredField, boolean> = { name: false, email: false, message: false };
+
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+
+interface Web3FormsResponse {
+  success: boolean;
+  message?: string;
+}
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -111,7 +118,10 @@ function ValidityHint({ isTouched, isValid, validLabel, hintLabel }: ValidityHin
 export function Contact() {
   const [form, setForm] = useState<ContactFormState>(initialForm);
   const [touched, setTouched] = useState<Record<RequiredField, boolean>>(initialTouched);
+  const [honeypot, setHoneypot] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [showRequiredError, setShowRequiredError] = useState(false);
   const [shake, setShake] = useState(false);
 
@@ -126,6 +136,7 @@ export function Contact() {
     (field: keyof ContactFormState) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { value } = event.target;
       setIsSent(false);
+      setSubmitError(false);
       if (field === 'phone') {
         setForm((prev) => ({ ...prev, phone: value.replace(/\D/g, '').slice(0, 9) }));
         return;
@@ -138,8 +149,10 @@ export function Contact() {
       setTouched((prev) => ({ ...prev, [field]: true }));
     };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isSubmitting) return;
+
     if (!isFormValid) {
       setTouched({ name: true, email: true, message: true });
       setShowRequiredError(true);
@@ -147,9 +160,47 @@ export function Contact() {
       window.setTimeout(() => setShake(false), 500);
       return;
     }
+
     setShowRequiredError(false);
-    // Backend wiring lands later — for now this only confirms the click visually.
-    setIsSent(true);
+    setSubmitError(false);
+
+    // Honeypot caught something — pretend it worked so the bot has no reason to adapt,
+    // but never actually hit the API or spend our monthly submission quota.
+    if (honeypot) {
+      setIsSent(true);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+          subject: `Nowa wiadomość od ${form.name} - rymn.me`,
+          from_name: 'rymn.me',
+          name: form.name,
+          email: form.email,
+          phone: form.phone ? `+48 ${form.phone}` : 'nie podano',
+          message: form.message,
+        }),
+      });
+
+      const data = (await response.json()) as Web3FormsResponse;
+
+      if (data.success) {
+        setIsSent(true);
+        setForm(initialForm);
+        setTouched(initialTouched);
+      } else {
+        setSubmitError(true);
+      }
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -178,6 +229,20 @@ export function Contact() {
           onSubmit={handleSubmit}
           className="col-span-full flex flex-col gap-5 p-8 sm:col-span-7 sm:p-10"
         >
+          {/* Honeypot: invisible to real visitors, irresistible to form-filling bots. */}
+          <div style={{ position: 'absolute', left: '-9999px', top: 0 }} aria-hidden="true">
+            <label htmlFor="contact-company">Nie wypełniaj tego pola</label>
+            <input
+              id="contact-company"
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(event) => setHoneypot(event.target.value)}
+            />
+          </div>
+
           <div>
             <label htmlFor="contact-name" className={labelClass}>
             Imię i Nazwisko / Nazwa Firmy / Nickname
@@ -293,14 +358,27 @@ export function Contact() {
           <div>
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-4 text-sm font-semibold text-black transition-colors duration-300 sm:text-base ${
-                shake ? 'animate-shake' : ''
-              }`}
+              disabled={isSubmitting}
+              whileHover={isSubmitting ? undefined : { scale: 1.02 }}
+              whileTap={isSubmitting ? undefined : { scale: 0.98 }}
+              className={`flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-4 text-sm font-semibold text-black transition-colors duration-300 sm:text-base ${
+                isSubmitting ? 'cursor-wait opacity-70' : 'cursor-pointer'
+              } ${shake ? 'animate-shake' : ''}`}
             >
               <AnimatePresence mode="wait" initial={false}>
-                {isSent ? (
+                {isSubmitting ? (
+                  <motion.span
+                    key="sending"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center gap-2"
+                  >
+                    <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2} />
+                    Wysyłanie...
+                  </motion.span>
+                ) : isSent ? (
                   <motion.span
                     key="sent"
                     initial={{ opacity: 0, y: -6 }}
@@ -339,6 +417,18 @@ export function Contact() {
                 >
                   <AlertCircle className="h-3.5 w-3.5 shrink-0" strokeWidth={2.25} />
                   Uzupełnij poprawnie wymagane pola powyżej.
+                </motion.p>
+              )}
+              {submitError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  exit={{ opacity: 0, y: -4, height: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="mt-3 flex items-center gap-1.5 text-xs text-red-400"
+                >
+                  <AlertCircle className="h-3.5 w-3.5 shrink-0" strokeWidth={2.25} />
+                  Coś poszło nie tak. Spróbuj ponownie albo napisz bezpośrednio.
                 </motion.p>
               )}
             </AnimatePresence>
