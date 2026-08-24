@@ -3,6 +3,7 @@ import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { Terms } from './pages/Terms';
 
 /**
  * Personal hub for rymn.me. The home view has one job: introduce me in a
@@ -16,6 +17,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="kontakt" element={<Contact />} />
         <Route path="polityka-prywatnosci" element={<PrivacyPolicy />} />
+        <Route path="regulamin" element={<Terms />} />
       </Route>
     </Routes>
   );
