@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { PortfolioGateway } from '../types';
 import { GatewayCard } from './GatewayCard';
@@ -8,6 +8,9 @@ import { easeOut } from '../lib/motion';
 interface GatewaysProps {
   gateways: readonly PortfolioGateway[];
 }
+
+const SWIPE_OFFSET = 56;
+const SWIPE_VELOCITY = 450;
 
 export function Gateways({ gateways }: GatewaysProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -20,9 +23,20 @@ export function Gateways({ gateways }: GatewaysProps) {
     setActiveIndex(next);
   };
 
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const { offset, velocity } = info;
+    if (offset.x < -SWIPE_OFFSET || velocity.x < -SWIPE_VELOCITY) {
+      goTo(activeIndex + 1);
+      return;
+    }
+    if (offset.x > SWIPE_OFFSET || velocity.x > SWIPE_VELOCITY) {
+      goTo(activeIndex - 1);
+    }
+  };
+
   return (
     <section id="gateways" className="relative z-20 mx-auto max-w-5xl px-6 sm:px-10">
-      {/* Mobile: one card at a time, swiped via arrow controls */}
+      {/* Mobile: one card at a time, arrows + finger swipe */}
       <div className="md:hidden">
         <div className="relative overflow-hidden rounded-[28px]">
           <AnimatePresence mode="wait" initial={false}>
@@ -32,8 +46,14 @@ export function Gateways({ gateways }: GatewaysProps) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: direction >= 0 ? -32 : 32 }}
               transition={{ duration: 0.35, ease: easeOut }}
+              drag="x"
+              dragDirectionLock
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.35}
+              onDragEnd={handleDragEnd}
+              className="cursor-grab active:cursor-grabbing"
             >
-              <GatewayCard gateway={gateways[activeIndex]} tall />
+              <GatewayCard gateway={gateways[activeIndex]} tall tilt={false} />
             </motion.div>
           </AnimatePresence>
         </div>

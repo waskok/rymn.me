@@ -9,11 +9,13 @@ interface GatewayCardProps {
   delay?: number;
   className?: string;
   tall?: boolean;
+  /** Pointer tilt/glow — off in the mobile carousel so swipe stays clean. */
+  tilt?: boolean;
 }
 
 const springConfig = { stiffness: 180, damping: 18, mass: 0.5 };
 
-export function GatewayCard({ gateway, delay = 0, className = '', tall = false }: GatewayCardProps) {
+export function GatewayCard({ gateway, delay = 0, className = '', tall = false, tilt = true }: GatewayCardProps) {
   const ref = useRef<HTMLAnchorElement>(null);
   const comingSoon = gateway.comingSoon ?? false;
 
@@ -24,6 +26,7 @@ export function GatewayCard({ gateway, delay = 0, className = '', tall = false }
   const glowBackground = useMotionTemplate`radial-gradient(500px circle at ${glowX}% ${glowY}%, rgba(255,255,255,0.10), transparent 55%)`;
 
   const handlePointerMove = (event: PointerEvent<HTMLAnchorElement>) => {
+    if (!tilt) return;
     const bounds = ref.current?.getBoundingClientRect();
     if (!bounds) return;
     const px = (event.clientX - bounds.left) / bounds.width;
