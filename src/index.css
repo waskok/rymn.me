@@ -16,6 +16,9 @@
   --animate-marquee: marquee 32s linear infinite;
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
   --animate-support-pulse: support-pulse 2.8s ease-out infinite;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-cta-glow: cta-glow 2.6s ease-in-out infinite;
+  --animate-shine: shine 0.9s ease-in-out;
 
   @keyframes spin-slow {
     to {
@@ -34,6 +37,41 @@
     }
     50% {
       opacity: 1;
+    }
+  }
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-6px);
+    }
+    40% {
+      transform: translateX(6px);
+    }
+    60% {
+      transform: translateX(-4px);
+    }
+    80% {
+      transform: translateX(4px);
+    }
+  }
+  @keyframes shine {
+    0% {
+      transform: translateX(-20%);
+    }
+    100% {
+      transform: translateX(340%);
+    }
+  }
+  @keyframes cta-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.22);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.06);
     }
   }
   @keyframes support-pulse {
