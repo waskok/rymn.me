@@ -72,7 +72,7 @@ export function GatewayCard({
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.7, ease: easeOut, delay }}
       style={{ rotateX, rotateY, transformPerspective: 1000 }}
-      className={`group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.025] p-7 backdrop-blur-xl transition-colors duration-300 sm:p-9 ${
+      className={`group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.04] p-7 backdrop-blur-xl transition-colors duration-300 sm:p-9 ${
         comingSoon ? 'cursor-default' : 'hover:border-white/25'
       } ${tall ? 'md:min-h-[480px]' : ''} ${className}`}
     >
@@ -83,16 +83,16 @@ export function GatewayCard({
       />
 
       <div className="relative z-10 flex items-start justify-between" style={{ transform: 'translateZ(40px)' }}>
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-white transition-transform duration-300 group-hover:scale-110">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] text-white transition-transform duration-300 group-hover:scale-110">
           <Icon className="h-5 w-5" strokeWidth={1.6} />
         </div>
         <div className="flex items-center gap-2">
           {comingSoon && (
-            <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] font-medium tracking-[0.15em] text-white/40 uppercase">
+            <span className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[10px] font-medium tracking-[0.15em] text-white/55 uppercase">
               Wkrótce
             </span>
           )}
-          <span className="font-display text-xs tracking-[0.2em] text-white/25">{gateway.index}</span>
+          <span className="font-display text-xs tracking-[0.2em] text-white/35">{gateway.index}</span>
         </div>
       </div>
 
@@ -101,7 +101,7 @@ export function GatewayCard({
           {gateway.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/45"
+              className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/60"
             >
               {tag}
             </span>
@@ -114,23 +114,23 @@ export function GatewayCard({
           {gateway.title}
         </h3>
 
-        <p className={`mt-3 text-sm leading-relaxed text-white/45 ${wide ? 'max-w-xl' : 'max-w-sm'}`}>
+        <p className={`mt-3 text-sm leading-relaxed text-white/60 ${wide ? 'max-w-xl' : 'max-w-sm'}`}>
           {gateway.headline}
         </p>
-        <p className={`mt-2 text-sm leading-relaxed text-white/35 ${wide ? 'max-w-xl' : 'max-w-sm'}`}>
+        <p className={`mt-2 text-sm leading-relaxed text-white/50 ${wide ? 'max-w-xl' : 'max-w-sm'}`}>
           {gateway.description}
         </p>
 
         <div
           className={`mt-6 inline-flex items-center gap-2 text-sm font-medium ${
-            comingSoon ? 'text-white/40' : 'text-white/70'
+            comingSoon ? 'text-white/55' : 'text-white/80'
           }`}
         >
           {comingSoon ? 'Wkrótce dostępne' : 'Zobacz portfolio'}
           <span
             className={`flex h-7 w-7 items-center justify-center rounded-full border transition-all duration-300 ${
               comingSoon
-                ? 'border-white/10 text-white/40'
+                ? 'border-white/15 text-white/55'
                 : 'border-white/15 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:border-white/40 group-hover:bg-white group-hover:text-black'
             }`}
           >
