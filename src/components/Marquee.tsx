@@ -14,10 +14,10 @@ export function Marquee({ tags }: MarqueeProps) {
         {loop.map((tag, i) => (
           <span
             key={`${tag}-${i}`}
-            className="font-display flex items-center gap-10 text-sm tracking-[0.25em] text-white/25"
+            className="font-display flex items-center gap-10 text-sm tracking-[0.25em] text-white/50"
           >
             {tag}
-            <span className="h-1 w-1 rounded-full bg-white/20" />
+            <span className="h-1 w-1 rounded-full bg-white/40" />
           </span>
         ))}
       </div>

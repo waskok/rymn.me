@@ -23,20 +23,20 @@ export function Footer({ socials }: FooterProps) {
       className="relative z-20 mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 py-10 text-center sm:flex-row sm:justify-between sm:text-left sm:px-10"
     >
       <div className="flex items-center gap-2">
-        <span className="text-xs text-white/30">© {year}</span>
+        <span className="text-xs text-white/45">© {year}</span>
         <Link
           to="/"
           onClick={handleLogoClick}
           className="font-display cursor-pointer text-sm font-semibold tracking-tight text-white transition-opacity duration-200 hover:opacity-70"
         >
-          rymn<span className="text-white/40">.me</span>
+          rymn<span className="text-white/50">.me</span>
         </Link>
       </div>
 
       <div className="flex items-center gap-4">
         <Link
           to="/regulamin"
-          className="group relative text-xs text-white/30 transition-colors hover:text-white/60"
+          className="group relative text-xs text-white/45 transition-colors hover:text-white/70"
         >
           Regulamin
           <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
@@ -44,7 +44,7 @@ export function Footer({ socials }: FooterProps) {
 
         <Link
           to="/polityka-prywatnosci"
-          className="group relative text-xs text-white/30 transition-colors hover:text-white/60"
+          className="group relative text-xs text-white/45 transition-colors hover:text-white/70"
         >
           Polityka prywatności
           <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
@@ -53,7 +53,7 @@ export function Footer({ socials }: FooterProps) {
         <button
           type="button"
           onClick={reopen}
-          className="group relative cursor-pointer text-xs text-white/30 transition-colors hover:text-white/60"
+          className="group relative cursor-pointer text-xs text-white/45 transition-colors hover:text-white/70"
         >
           Zgoda cookies
           <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />

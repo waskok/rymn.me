@@ -14,7 +14,7 @@ function StatusPill() {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
       </span>
-      <span className="truncate text-[11px] font-medium text-white/70 sm:text-xs">
+      <span className="truncate text-[11px] font-medium text-white/80 sm:text-xs">
         Dostępny na nowe projekty
       </span>
     </div>
@@ -87,9 +87,9 @@ export function Header() {
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -24 }}
+      initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: easeOut }}
+      transition={{ duration: 0.45, ease: easeOut }}
       style={{ borderBottomColor: borderColor, backgroundColor }}
       className="sticky top-0 z-50 border-b border-transparent backdrop-blur-xl"
     >
