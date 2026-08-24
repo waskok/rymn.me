@@ -37,8 +37,13 @@ export function Gateways({ gateways }: GatewaysProps) {
   return (
     <section
       id="gateways"
+      aria-labelledby="gateways-heading"
       className="relative z-20 mx-auto max-w-5xl scroll-mt-20 px-6 sm:scroll-mt-28 sm:px-10"
     >
+      <h2 id="gateways-heading" className="sr-only">
+        Kierunki portfolio
+      </h2>
+
       {/* Mobile: one card at a time, arrows + finger swipe */}
       <div className="md:hidden">
         <div className="relative overflow-hidden rounded-[28px]">

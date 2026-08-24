@@ -14,7 +14,7 @@ function StatusPill() {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
       </span>
-      <span className="truncate text-[11px] font-medium text-white/70 sm:text-xs">
+      <span className="truncate text-[11px] font-medium text-white/80 sm:text-xs">
         Dostępny na nowe projekty
       </span>
     </div>

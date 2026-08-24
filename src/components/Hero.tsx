@@ -49,7 +49,7 @@ export function Hero({ stats }: HeroProps) {
 
       <motion.p
         variants={item}
-        className="mt-6 max-w-xl text-balance text-base leading-relaxed text-white/50 sm:text-lg"
+        className="mt-6 max-w-xl text-balance text-base leading-relaxed text-white/60 sm:text-lg"
       >
         Pracuję jako niezależny freelancer, w pełni skupiony na każdym projekcie. Poniżej zobaczysz kierunki, w których się rozwijam.
       </motion.p>
@@ -63,7 +63,7 @@ export function Hero({ stats }: HeroProps) {
             <span className="font-display text-2xl font-semibold text-white sm:text-3xl">
               {stat.value}
             </span>
-            <span className="text-xs text-white/50">{stat.label}</span>
+            <span className="text-xs text-white/55">{stat.label}</span>
           </div>
         ))}
         <button
@@ -71,7 +71,7 @@ export function Hero({ stats }: HeroProps) {
           onClick={() =>
             document.getElementById('gateways')?.scrollIntoView({ behavior: 'smooth' })
           }
-          className="ml-auto flex cursor-pointer items-center gap-2 text-xs font-medium text-white/50 transition-colors hover:text-white/85"
+          className="ml-auto flex cursor-pointer items-center gap-2 text-xs font-medium text-white/55 transition-colors hover:text-white/85"
         >
           <ArrowDown className="h-3.5 w-3.5 animate-bounce" strokeWidth={1.75} />
           Sprawdź poniżej
