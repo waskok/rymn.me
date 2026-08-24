@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import type { SocialLink } from '../types';
 import { Magnetic } from './Magnetic';
 import { useLogoClick } from '../lib/useLogoClick';
+import { useCookieConsent } from '../lib/cookieConsent';
 
 interface FooterProps {
   socials: readonly SocialLink[];
@@ -11,6 +12,7 @@ interface FooterProps {
 export function Footer({ socials }: FooterProps) {
   const year = new Date().getFullYear();
   const handleLogoClick = useLogoClick();
+  const { reopen } = useCookieConsent();
 
   return (
     <motion.footer
@@ -31,13 +33,32 @@ export function Footer({ socials }: FooterProps) {
         </Link>
       </div>
 
-      <Link
-        to="/polityka-prywatnosci"
-        className="group relative text-xs text-white/30 transition-colors hover:text-white/60"
-      >
-        Polityka prywatności
-        <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
-      </Link>
+      <div className="flex items-center gap-4">
+        <Link
+          to="/regulamin"
+          className="group relative text-xs text-white/30 transition-colors hover:text-white/60"
+        >
+          Regulamin
+          <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+        </Link>
+
+        <Link
+          to="/polityka-prywatnosci"
+          className="group relative text-xs text-white/30 transition-colors hover:text-white/60"
+        >
+          Polityka prywatności
+          <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+        </Link>
+
+        <button
+          type="button"
+          onClick={reopen}
+          className="group relative cursor-pointer text-xs text-white/30 transition-colors hover:text-white/60"
+        >
+          Zgoda cookies
+          <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+        </button>
+      </div>
 
       <div className="flex flex-wrap items-center justify-center gap-2">
         {socials.map((social) => (
