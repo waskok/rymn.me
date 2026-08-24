@@ -92,10 +92,13 @@ export function Gateways({ gateways }: GatewaysProps) {
         </div>
       </div>
 
-      {/* Desktop: full grid, no carousel needed */}
+      {/* Desktop: flagship gateway spans full width, the rest sit side by side */}
       <div className="hidden gap-5 md:grid md:grid-cols-2">
-        {gateways.map((gateway, i) => (
-          <GatewayCard key={gateway.id} gateway={gateway} tall delay={0.1 * i} />
+        {gateways[0] && (
+          <GatewayCard key={gateways[0].id} gateway={gateways[0]} className="md:col-span-2" wide />
+        )}
+        {gateways.slice(1).map((gateway, i) => (
+          <GatewayCard key={gateway.id} gateway={gateway} tall delay={0.1 * (i + 1)} />
         ))}
       </div>
     </section>

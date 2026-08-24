@@ -9,13 +9,22 @@ interface GatewayCardProps {
   delay?: number;
   className?: string;
   tall?: boolean;
+  /** Widens the text column — used by the full-width flagship tile. */
+  wide?: boolean;
   /** Pointer tilt/glow — off in the mobile carousel so swipe stays clean. */
   tilt?: boolean;
 }
 
 const springConfig = { stiffness: 180, damping: 18, mass: 0.5 };
 
-export function GatewayCard({ gateway, delay = 0, className = '', tall = false, tilt = true }: GatewayCardProps) {
+export function GatewayCard({
+  gateway,
+  delay = 0,
+  className = '',
+  tall = false,
+  wide = false,
+  tilt = true,
+}: GatewayCardProps) {
   const ref = useRef<HTMLAnchorElement>(null);
   const comingSoon = gateway.comingSoon ?? false;
 
@@ -99,12 +108,18 @@ export function GatewayCard({ gateway, delay = 0, className = '', tall = false, 
           ))}
         </div>
 
-        <h3 className="font-display text-xl font-medium text-white sm:text-2xl">{gateway.title}</h3>
+        <h3
+          className={`font-display font-medium text-white ${wide ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}
+        >
+          {gateway.title}
+        </h3>
 
-        {tall && (
-          <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/45">{gateway.headline}</p>
-        )}
-        <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/35">{gateway.description}</p>
+        <p className={`mt-3 text-sm leading-relaxed text-white/45 ${wide ? 'max-w-xl' : 'max-w-sm'}`}>
+          {gateway.headline}
+        </p>
+        <p className={`mt-2 text-sm leading-relaxed text-white/35 ${wide ? 'max-w-xl' : 'max-w-sm'}`}>
+          {gateway.description}
+        </p>
 
         <div
           className={`mt-6 inline-flex items-center gap-2 text-sm font-medium ${
