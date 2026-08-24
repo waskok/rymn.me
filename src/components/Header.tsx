@@ -87,9 +87,9 @@ export function Header() {
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -24 }}
+      initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: easeOut }}
+      transition={{ duration: 0.45, ease: easeOut }}
       style={{ borderBottomColor: borderColor, backgroundColor }}
       className="sticky top-0 z-50 border-b border-transparent backdrop-blur-xl"
     >

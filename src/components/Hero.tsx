@@ -10,17 +10,17 @@ interface HeroProps {
 const container: Variants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.09, delayChildren: 0.15 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
   },
 };
 
+/** Secondary hero blocks only — never the LCP headline (opacity:0 delays Lighthouse LCP). */
 const item: Variants = {
-  hidden: { opacity: 0, y: 28, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: 18 },
   show: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.8, ease: easeOut },
+    transition: { duration: 0.55, ease: easeOut },
   },
 };
 
@@ -32,8 +32,11 @@ export function Hero({ stats }: HeroProps) {
       animate="show"
       className="relative z-20 mx-auto flex max-w-5xl flex-col items-start px-6 pt-6 pb-14 sm:px-10 sm:pt-10 sm:pb-20"
     >
+      {/* Visible from first paint for LCP; only a short slide so it doesn't look static. */}
       <motion.h1
-        variants={item}
+        initial={{ y: 12 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: easeOut }}
         className="font-display text-balance text-4xl leading-[1.08] font-medium tracking-tight text-white sm:text-6xl md:text-7xl"
       >
         Tworzę cyfrowe produkty,
