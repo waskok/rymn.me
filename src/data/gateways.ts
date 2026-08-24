@@ -1,4 +1,4 @@
-import { Code2, Clapperboard, Mail } from 'lucide-react';
+import { Code2, Clapperboard, Palette, Mail } from 'lucide-react';
 import { GithubIcon, DiscordIcon } from '../components/icons';
 import type { PortfolioGateway, SocialLink, StatItem } from '../types';
 
@@ -21,15 +21,26 @@ export const gateways: readonly PortfolioGateway[] = [
     comingSoon: true,
   },
   {
-    id: 'video',
+    id: 'graphic',
     index: '02',
+    title: 'Graphic Design',
+    headline: 'Projekty, które przyciągają wzrok i budują markę.',
+    description: 'Logotypy, banery i materiały graficzne pod social media i marki - projektowane w Photoshopie.',
+    icon: Palette,
+    url: 'https://graphic.rymn.me',
+    tags: ['Photoshop', 'Logo', 'Banery'],
+    comingSoon: true,
+  },
+  {
+    id: 'video',
+    index: '03',
     title: 'Montaż wideo',
     headline: 'Treści, które przyciągają uwagę od pierwszej sekundy.',
     description:
-      'Dynamiczny montaż na YouTube i Shorts - krótkie, angażujące formy wideo skrojone pod social media.',
+      'Dynamiczny montaż na YouTube i TikToka - krótkie, angażujące formy wideo skrojone pod social media.',
     icon: Clapperboard,
     url: 'https://video.rymn.me',
-    tags: ['YouTube', 'Shorts', 'Social Media'],
+    tags: ['YouTube', 'TikTok', 'Shorts', 'Premiere Pro', 'CapCut'],
     comingSoon: true,
   },
 ] as const;
