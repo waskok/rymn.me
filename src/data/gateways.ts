@@ -58,9 +58,9 @@ export const socials: readonly SocialLink[] = [
 ] as const;
 
 export const stats: readonly StatItem[] = [
-  { id: 'lighthouse', value: '100/100', label: 'Wynik Google Lighthouse' },
   { id: 'freelancer', value: 'Freelancer', label: 'Bez agencji i pośredników' },
   { id: 'exclusive', value: '1:1', label: 'Praca na wyłączność' },
+  { id: 'support', value: 'Pełne Wsparcie', label: 'Od Początku do Końca' },
 ] as const;
 
 export const marqueeTags: readonly string[] = [

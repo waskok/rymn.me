@@ -13,28 +13,29 @@ const sections: readonly Section[] = [
     paragraphs: [
       'Niniejszy regulamin określa zasady korzystania z serwisu internetowego dostępnego pod adresem rymn.me (dalej: „Serwis”).',
       'Serwis jest prowadzony przez osobę występującą pod marką „rymn” (dalej: „Administrator”).',
-      'Kontakt z Administratorem możliwy jest mailowo pod adresem kontakt.rymn@gmail.com lub przez Discorda (rymn_).',
+      'Kontakt z Administratorem możliwy jest mailowo pod adresem kontakt.rymn@gmail.com, przez Discorda (rymn_) lub za pomocą formularza kontaktowego w Serwisie.',
     ],
   },
   {
     title: '2. Wymagania techniczne',
     paragraphs: [
       'Do korzystania z Serwisu wystarczy urządzenie z dostępem do internetu oraz aktualna przeglądarka wspierająca HTML5, CSS3 i JavaScript.',
-      'Część funkcji Serwisu (np. formularz kontaktowy) może wymagać włączonej obsługi plików cookies lub pamięci lokalnej przeglądarki, a także pozytywnego przejścia weryfikacji antybotowej, jeśli zostanie ona wdrożona.',
+      'Korzystanie z formularza kontaktowego wymaga włączonej obsługi plików cookies lub pamięci lokalnej przeglądarki (localStorage) oraz pozytywnego przejścia weryfikacji antybotowej Cloudflare Turnstile.',
     ],
   },
   {
     title: '3. Zasady korzystania z Serwisu',
     paragraphs: [
       'Korzystając z Serwisu, w tym z formularza kontaktowego, należy działać zgodnie z prawem i dobrymi obyczajami.',
-      'Niedopuszczalne jest przesyłanie treści nielegalnych, obraźliwych lub naruszających prawa osób trzecich, a także podejmowanie działań mogących zakłócić prawidłowe działanie Serwisu lub obejście jego zabezpieczeń technicznych.',
+      'Niedopuszczalne jest przesyłanie treści nielegalnych, obraźliwych lub naruszających prawa osób trzecich, a także podejmowanie działań mogących zakłócić prawidłowe działanie Serwisu lub obejście jego zabezpieczeń technicznych, w tym mechanizmu Cloudflare Turnstile.',
       'Administrator może zignorować lub usunąć wiadomości noszące charakter spamu, nadużycia lub naruszające powyższe zasady.',
     ],
   },
   {
     title: '4. Formularz kontaktowy',
     paragraphs: [
-      'Serwis udostępnia (lub będzie udostępniał) formularz kontaktowy pozwalający na przesłanie wiadomości do Administratora.',
+      'Serwis udostępnia formularz kontaktowy pod adresem rymn.me/kontakt, pozwalający na przesłanie wiadomości do Administratora.',
+      'Przed wysłaniem wiadomości wymagane jest przejście weryfikacji Cloudflare Turnstile. Bez pozytywnej weryfikacji formularz nie zostanie przyjęty.',
       'Wysłanie wiadomości nie jest równoznaczne z zawarciem jakiejkolwiek umowy ani zobowiązaniem do udzielenia odpowiedzi w określonym terminie — Administrator dokłada starań, aby odpowiadać w rozsądnym czasie.',
     ],
   },
@@ -49,8 +50,10 @@ const sections: readonly Section[] = [
   {
     title: '6. Cookies i usługi zewnętrzne',
     paragraphs: [
-      'Serwis korzysta z infrastruktury i usług Cloudflare, w tym zabezpieczeń antybotowych oraz analityki ruchu (Cloudflare Web Analytics), które mogą wiązać się z wykorzystaniem plików cookies lub podobnych technologii.',
-      'Szczegółowe informacje na ten temat znajdują się w Polityce prywatności.',
+      'Serwis korzysta z infrastruktury i usług Cloudflare, w tym zabezpieczeń antybotowych Cloudflare Turnstile przy formularzu kontaktowym, które mogą wiązać się z wykorzystaniem plików cookies lub podobnych technologii.',
+      'Serwis wyświetla pasek informujący o plikach cookies — wybór odwiedzającego zapisywany jest w pamięci lokalnej przeglądarki.',
+      'Wiadomości z formularza kontaktowego są technicznie obsługiwane przez usługę Web3Forms.',
+      'Szczegółowe informacje na temat przetwarzania danych znajdują się w Polityce prywatności.',
     ],
   },
   {
@@ -63,13 +66,13 @@ const sections: readonly Section[] = [
     title: '8. Odpowiedzialność',
     paragraphs: [
       'Serwis udostępniany jest w stanie takim, w jakim jest („as is”), bez gwarancji nieprzerwanej dostępności lub całkowitego braku błędów.',
-      'Administrator dokłada należytej staranności w celu zapewnienia prawidłowego działania Serwisu, jednak w granicach dopuszczalnych przez obowiązujące przepisy prawa nie odpowiada za przerwy w dostępności ani za działanie usług zewnętrznych, z których Serwis korzysta (w szczególności Cloudflare).',
+      'Administrator dokłada należytej staranności w celu zapewnienia prawidłowego działania Serwisu, jednak w granicach dopuszczalnych przez obowiązujące przepisy prawa nie odpowiada za przerwy w dostępności ani za działanie usług zewnętrznych, z których Serwis korzysta (w szczególności Cloudflare i Web3Forms).',
     ],
   },
   {
     title: '9. Zgłoszenia i kontakt w sprawach Regulaminu',
     paragraphs: [
-      'Wszelkie uwagi, pytania lub zgłoszenia dotyczące działania Serwisu lub niniejszego Regulaminu można przesyłać na adres kontakt.rymn@gmail.com.',
+      'Wszelkie uwagi, pytania lub zgłoszenia dotyczące działania Serwisu lub niniejszego Regulaminu można przesyłać na adres kontakt.rymn@gmail.com lub przez formularz kontaktowy w Serwisie.',
     ],
   },
   {
@@ -100,7 +103,7 @@ export function Terms() {
 
       <span className="font-display text-xs tracking-[0.2em] text-white/25">PRAWNE</span>
       <h1 className="font-display mt-3 text-3xl font-medium text-white sm:text-5xl">Regulamin</h1>
-      <p className="mt-4 text-sm text-white/40">Ostatnia aktualizacja: 24 sierpnia 2026</p>
+      <p className="mt-4 text-sm text-white/40">Ostatnia aktualizacja: 28 sierpnia 2026</p>
 
       <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-10">
         {sections.map((section) => (
@@ -128,8 +131,12 @@ export function Terms() {
               className="text-white underline underline-offset-4 hover:text-white/70"
             >
               kontakt.rymn@gmail.com
-            </a>{' '}
-            lub przez Discorda (<span className="text-white">rymn_</span>).
+            </a>
+            , przez Discorda (<span className="text-white">rymn_</span>) lub za pomocą{' '}
+            <a href="/kontakt" className="text-white underline underline-offset-4 hover:text-white/70">
+              formularza kontaktowego
+            </a>
+            .
           </p>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import type { SocialLink } from '../types';
 import { Magnetic } from './Magnetic';
+import { ContactButton } from './ContactButton';
 import { useLogoClick } from '../lib/useLogoClick';
 import { useCookieConsent } from '../lib/cookieConsent';
 
@@ -58,6 +59,10 @@ export function Footer({ socials }: FooterProps) {
           Zgoda cookies
           <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
         </button>
+      </div>
+
+      <div className="w-full sm:hidden">
+        <ContactButton fullWidth className="px-4 py-3 text-sm" />
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-2">
