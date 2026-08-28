@@ -44,7 +44,7 @@ const item: Variants = {
 };
 
 const baseFieldClass =
-  'w-full rounded-2xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-all duration-300 sm:text-base';
+  'box-border min-w-0 w-full max-w-full rounded-2xl border bg-white/[0.03] px-3.5 py-3 text-base text-white placeholder:text-white/30 outline-none transition-all duration-300 sm:px-4';
 
 /** Neutral until the field is touched, then red while invalid and bright white once accepted. */
 function fieldStateClass(isTouched: boolean, isValid: boolean) {
@@ -224,7 +224,7 @@ export function Contact() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="mx-auto max-w-5xl px-6 py-24 sm:px-10"
+      className="mx-auto w-full min-w-0 max-w-5xl px-4 py-16 sm:px-6 sm:py-24 md:px-10"
     >
       <motion.span variants={item} className="font-display text-xs tracking-[0.2em] text-white/25">
         KONTAKT
@@ -238,12 +238,12 @@ export function Contact() {
 
       <motion.div
         variants={item}
-        className="relative mt-12 grid overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.04] backdrop-blur-2xl sm:grid-cols-10"
+        className="relative mt-8 grid w-full min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl sm:mt-12 sm:rounded-[32px] sm:grid-cols-10"
       >
         <form
           noValidate
           onSubmit={handleSubmit}
-          className="col-span-full flex flex-col gap-5 p-8 sm:col-span-7 sm:p-10"
+          className="col-span-full flex min-w-0 w-full flex-col gap-4 p-4 sm:col-span-7 sm:gap-5 sm:p-8 md:p-10"
         >
           {/* Honeypot: invisible to real visitors, irresistible to form-filling bots. */}
           <div style={{ position: 'absolute', left: '-9999px', top: 0 }} aria-hidden="true">
@@ -260,8 +260,8 @@ export function Contact() {
           </div>
 
           <div>
-            <label htmlFor="contact-name" className={labelClass}>
-            Imię i Nazwisko / Nazwa Firmy / Nickname
+            <label htmlFor="contact-name" className={`${labelClass} text-pretty`}>
+              Imię i Nazwisko / Nazwa Firmy / Nickname
             </label>
             <input
               id="contact-name"
@@ -306,7 +306,7 @@ export function Contact() {
               Numer telefonu <span className="text-white/30">(opcjonalnie)</span>
             </label>
             <div
-              className={`mt-2 flex items-center gap-2.5 rounded-2xl border bg-white/[0.03] px-4 py-3 transition-all duration-300 ${fieldStateClass(phoneStarted, phoneValid)}`}
+              className={`mt-2 flex min-w-0 items-center gap-2 rounded-2xl border bg-white/[0.03] px-3.5 py-3 transition-all duration-300 sm:gap-2.5 sm:px-4 ${fieldStateClass(phoneStarted, phoneValid)}`}
             >
               <span className="flex shrink-0 items-center gap-1.5 text-white/50 select-none">
                 <span className="flex h-3.5 w-5 flex-col overflow-hidden rounded-[2px] ring-1 ring-white/20">
@@ -324,7 +324,7 @@ export function Contact() {
                 value={form.phone}
                 onChange={handleChange('phone')}
                 placeholder="512 345 678"
-                className="w-full bg-transparent text-sm text-white placeholder:text-white/30 outline-none sm:text-base"
+                className="min-w-0 w-full bg-transparent text-base text-white placeholder:text-white/30 outline-none"
               />
             </div>
             <ValidityHint
@@ -371,18 +371,20 @@ export function Contact() {
             .
           </p>
 
-          <div className="overflow-hidden rounded-2xl">
-            <Turnstile
-              ref={turnstileRef}
-              siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-              onSuccess={(token: string) => {
-                setTurnstileToken(token);
-                setTurnstileError(false);
-              }}
-              onExpire={() => setTurnstileToken(null)}
-              onError={() => setTurnstileToken(null)}
-              options={{ theme: 'dark' }}
-            />
+          <div className="flex w-full min-w-0 justify-center overflow-hidden">
+            <div className="origin-center scale-[0.82] sm:scale-100">
+              <Turnstile
+                ref={turnstileRef}
+                siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                onSuccess={(token: string) => {
+                  setTurnstileToken(token);
+                  setTurnstileError(false);
+                }}
+                onExpire={() => setTurnstileToken(null)}
+                onError={() => setTurnstileToken(null)}
+                options={{ theme: 'dark' }}
+              />
+            </div>
           </div>
 
           <div>
@@ -477,7 +479,7 @@ export function Contact() {
           </div>
         </form>
 
-        <div className="col-span-full flex flex-col gap-6 border-t border-white/10 bg-black/20 p-8 sm:col-span-3 sm:border-t-0 sm:border-l sm:p-10">
+        <div className="col-span-full flex min-w-0 flex-col gap-5 border-t border-white/10 bg-black/20 p-4 sm:col-span-3 sm:gap-6 sm:border-t-0 sm:border-l sm:p-8 md:p-10">
           <div>
             <span className="font-display text-xs tracking-[0.2em] text-white/25">SOCIALS</span>
             <p className="mt-2 text-sm text-white/45">Znajdziesz mnie też tutaj.</p>
