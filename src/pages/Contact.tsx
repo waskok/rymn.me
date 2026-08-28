@@ -1,7 +1,8 @@
-import { useState, type ChangeEvent, type FocusEvent, type FormEvent } from 'react';
+import { useRef, useState, type ChangeEvent, type FocusEvent, type FormEvent } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AlertCircle, Check, Loader2, Send } from 'lucide-react';
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import { easeOut } from '../lib/motion';
 import { socials } from '../data/gateways';
 
@@ -18,9 +19,9 @@ type RequiredField = 'name' | 'email' | 'message';
 const initialForm: ContactFormState = { name: '', email: '', phone: '', message: '' };
 const initialTouched: Record<RequiredField, boolean> = { name: false, email: false, message: false };
 
-const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const CONTACT_API = '/api/contact';
 
-interface Web3FormsResponse {
+interface ContactApiResponse {
   success: boolean;
   message?: string;
 }
@@ -116,9 +117,12 @@ function ValidityHint({ isTouched, isValid, validLabel, hintLabel }: ValidityHin
 }
 
 export function Contact() {
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const [form, setForm] = useState<ContactFormState>(initialForm);
   const [touched, setTouched] = useState<Record<RequiredField, boolean>>(initialTouched);
   const [honeypot, setHoneypot] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [submitError, setSubmitError] = useState(false);
@@ -163,6 +167,7 @@ export function Contact() {
 
     setShowRequiredError(false);
     setSubmitError(false);
+    setTurnstileError(false);
 
     // Honeypot caught something — pretend it worked so the bot has no reason to adapt,
     // but never actually hit the API or spend our monthly submission quota.
@@ -171,33 +176,44 @@ export function Contact() {
       return;
     }
 
+    if (!turnstileToken) {
+      setTurnstileError(true);
+      setShake(true);
+      window.setTimeout(() => setShake(false), 500);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      const response = await fetch(WEB3FORMS_ENDPOINT, {
+      const response = await fetch(CONTACT_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
-          subject: `Nowa wiadomość od ${form.name} - rymn.me`,
-          from_name: 'rymn.me',
           name: form.name,
           email: form.email,
-          phone: form.phone ? `+48 ${form.phone}` : 'nie podano',
+          phone: form.phone,
           message: form.message,
+          turnstileToken,
         }),
       });
 
-      const data = (await response.json()) as Web3FormsResponse;
+      const data = (await response.json()) as ContactApiResponse;
 
       if (data.success) {
         setIsSent(true);
         setForm(initialForm);
         setTouched(initialTouched);
+        setTurnstileToken(null);
+        turnstileRef.current?.reset();
       } else {
         setSubmitError(true);
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
       }
     } catch {
       setSubmitError(true);
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -355,6 +371,20 @@ export function Contact() {
             .
           </p>
 
+          <div className="overflow-hidden rounded-2xl">
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+              onSuccess={(token: string) => {
+                setTurnstileToken(token);
+                setTurnstileError(false);
+              }}
+              onExpire={() => setTurnstileToken(null)}
+              onError={() => setTurnstileToken(null)}
+              options={{ theme: 'dark' }}
+            />
+          </div>
+
           <div>
             <motion.button
               type="submit"
@@ -407,6 +437,18 @@ export function Contact() {
             </motion.button>
 
             <AnimatePresence>
+              {turnstileError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  exit={{ opacity: 0, y: -4, height: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="mt-3 flex items-center gap-1.5 text-xs text-red-400"
+                >
+                  <AlertCircle className="h-3.5 w-3.5 shrink-0" strokeWidth={2.25} />
+                  Potwierdź weryfikację antybotową przed wysłaniem.
+                </motion.p>
+              )}
               {showRequiredError && !isFormValid && (
                 <motion.p
                   initial={{ opacity: 0, y: -4, height: 0 }}

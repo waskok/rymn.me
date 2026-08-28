@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  /** Public Web3Forms access key - safe on the client, forwards submissions to kontakt.rymn@gmail.com. */
-  readonly VITE_WEB3FORMS_ACCESS_KEY: string;
+  /** Public Cloudflare Turnstile site key — rendered in the contact form widget. */
+  readonly VITE_TURNSTILE_SITE_KEY: string;
 }
 
 interface ImportMeta {

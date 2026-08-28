@@ -12,6 +12,9 @@ const PrivacyPolicy = lazy(() =>
 const Terms = lazy(() =>
   import('./pages/Terms').then((module) => ({ default: module.Terms })),
 );
+const NotFound = lazy(() =>
+  import('./pages/NotFound').then((module) => ({ default: module.NotFound })),
+);
 
 /**
  * Personal hub for rymn.me. The home view has one job: introduce me in a
@@ -27,6 +30,7 @@ function App() {
           <Route path="kontakt" element={<Contact />} />
           <Route path="polityka-prywatnosci" element={<PrivacyPolicy />} />
           <Route path="regulamin" element={<Terms />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Suspense>
