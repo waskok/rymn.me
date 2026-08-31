@@ -6,12 +6,15 @@ import { Magnetic } from './Magnetic';
 import { ContactButton } from './ContactButton';
 import { useLogoClick } from '../lib/useLogoClick';
 import { easeOut } from '../lib/motion';
+import { usePerformanceMode } from '../lib/performanceMode';
 
-function StatusPill() {
+function StatusPill({ reduceVisualEffects }: { reduceVisualEffects: boolean }) {
   return (
     <div className="flex min-w-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 backdrop-blur-sm sm:gap-2 sm:px-4 sm:py-2">
       <span className="relative flex h-2 w-2 shrink-0">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+        {!reduceVisualEffects && (
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+        )}
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
       </span>
       <span className="truncate text-[11px] font-medium text-white/80 sm:text-xs">
@@ -21,7 +24,15 @@ function StatusPill() {
   );
 }
 
-function SupportButton({ className = '', onClick }: { className?: string; onClick?: () => void }) {
+function SupportButton({
+  className = '',
+  onClick,
+  reduceVisualEffects,
+}: {
+  className?: string;
+  onClick?: () => void;
+  reduceVisualEffects: boolean;
+}) {
   return (
     <a
       href="https://buycoffee.to/rymn"
@@ -30,10 +41,12 @@ function SupportButton({ className = '', onClick }: { className?: string; onClic
       onClick={onClick}
       className={`relative isolate flex items-center gap-2 overflow-visible rounded-full border border-white/15 font-medium text-white/80 transition-colors hover:border-white/30 hover:text-white ${className}`}
     >
-      <span
-        aria-hidden="true"
-        className="animate-support-pulse pointer-events-none absolute inset-0 rounded-full border-2 border-white/35"
-      />
+      {!reduceVisualEffects && (
+        <span
+          aria-hidden="true"
+          className="animate-support-pulse pointer-events-none absolute inset-0 rounded-full border-2 border-white/35"
+        />
+      )}
       <Coffee className="relative z-10 h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
       <span className="relative z-10">Wesprzyj mnie</span>
     </a>
@@ -43,6 +56,7 @@ function SupportButton({ className = '', onClick }: { className?: string; onClic
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleLogoClick = useLogoClick();
+  const { reduceVisualEffects } = usePerformanceMode();
 
   const { scrollY } = useScroll();
   const borderOpacity = useTransform(scrollY, [0, 120], [0, 0.12]);
@@ -70,12 +84,18 @@ export function Header() {
         </Magnetic>
 
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-          <StatusPill />
+          <StatusPill reduceVisualEffects={reduceVisualEffects} />
 
           <div className="hidden items-center gap-3 sm:flex">
-            <SupportButton className="px-4 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm" />
+            <SupportButton
+              className="px-4 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm"
+              reduceVisualEffects={reduceVisualEffects}
+            />
 
-            <ContactButton className="px-4 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm" />
+            <ContactButton
+              className="px-4 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm"
+              reduceVisualEffects={reduceVisualEffects}
+            />
           </div>
 
           <button
@@ -104,11 +124,13 @@ export function Header() {
                 fullWidth
                 className="px-4 py-3 text-sm"
                 onClick={() => setIsMenuOpen(false)}
+                reduceVisualEffects={reduceVisualEffects}
               />
 
               <SupportButton
                 className="justify-center px-4 py-3 text-sm"
                 onClick={() => setIsMenuOpen(false)}
+                reduceVisualEffects={reduceVisualEffects}
               />
             </div>
           </motion.div>

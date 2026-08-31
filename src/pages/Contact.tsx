@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent, type FocusEvent, type FormEvent } from 'react';
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AlertCircle, Check, Loader2, Send } from 'lucide-react';
@@ -148,10 +148,9 @@ export function Contact() {
       setForm((prev) => ({ ...prev, [field]: value }));
     };
 
-  const handleFocus =
-    (field: RequiredField) => (_event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setTouched((prev) => ({ ...prev, [field]: true }));
-    };
+  const handleFocus = (field: RequiredField) => () => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -1,5 +1,6 @@
 import { useRef, type PointerEvent, type ReactNode } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { usePerformanceMode } from '../lib/performanceMode';
 
 interface MagneticProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ interface MagneticProps {
  * cursor while it's hovered, then springs back to rest on pointer leave.
  */
 export function Magnetic({ children, strength = 0.4, className }: MagneticProps) {
+  const { reduceVisualEffects } = usePerformanceMode();
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -19,6 +21,7 @@ export function Magnetic({ children, strength = 0.4, className }: MagneticProps)
   const springY = useSpring(y, { stiffness: 200, damping: 16, mass: 0.4 });
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (reduceVisualEffects) return;
     const bounds = ref.current?.getBoundingClientRect();
     if (!bounds) return;
     const relativeX = event.clientX - (bounds.left + bounds.width / 2);
@@ -35,9 +38,9 @@ export function Magnetic({ children, strength = 0.4, className }: MagneticProps)
   return (
     <motion.div
       ref={ref}
-      onPointerMove={handlePointerMove}
+      onPointerMove={reduceVisualEffects ? undefined : handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      style={{ x: springX, y: springY }}
+      style={reduceVisualEffects ? undefined : { x: springX, y: springY }}
       className={className}
     >
       {children}

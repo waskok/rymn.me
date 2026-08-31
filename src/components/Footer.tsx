@@ -5,6 +5,7 @@ import { Magnetic } from './Magnetic';
 import { ContactButton } from './ContactButton';
 import { useLogoClick } from '../lib/useLogoClick';
 import { useCookieConsent } from '../lib/cookieConsent';
+import { usePerformanceMode } from '../lib/performanceMode';
 
 interface FooterProps {
   socials: readonly SocialLink[];
@@ -14,6 +15,7 @@ export function Footer({ socials }: FooterProps) {
   const year = new Date().getFullYear();
   const handleLogoClick = useLogoClick();
   const { reopen } = useCookieConsent();
+  const { lowSpecMode, reduceVisualEffects, toggleLowSpecMode } = usePerformanceMode();
 
   return (
     <motion.footer
@@ -23,8 +25,8 @@ export function Footer({ socials }: FooterProps) {
       transition={{ duration: 0.8 }}
       className="relative z-20 mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 py-10 text-center sm:flex-row sm:justify-between sm:text-left sm:px-10"
     >
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-white/45">© {year}</span>
+      <div className="flex shrink-0 items-center gap-2 whitespace-nowrap">
+        <span className="text-xs text-white/45">©&nbsp;{year}</span>
         <Link
           to="/"
           onClick={handleLogoClick}
@@ -34,7 +36,7 @@ export function Footer({ socials }: FooterProps) {
         </Link>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
         <Link
           to="/regulamin"
           className="group relative text-xs text-white/45 transition-colors hover:text-white/70"
@@ -59,10 +61,21 @@ export function Footer({ socials }: FooterProps) {
           Zgoda cookies
           <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
         </button>
+
+        <button
+          type="button"
+          onClick={toggleLowSpecMode}
+          aria-pressed={lowSpecMode}
+          title="Ręcznie wyłącza ciężkie efekty wizualne. Domyślnie wyłączony; włącza się sam dopiero gdy strona wyraźnie się przycina."
+          className="group relative cursor-pointer text-xs text-white/45 transition-colors hover:text-white/70"
+        >
+          Tryb niskiej specyfikacji: {lowSpecMode ? 'wł.' : 'wył.'}
+          <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+        </button>
       </div>
 
       <div className="w-full sm:hidden">
-        <ContactButton fullWidth className="px-4 py-3 text-sm" />
+        <ContactButton fullWidth className="px-4 py-3 text-sm" reduceVisualEffects={reduceVisualEffects} />
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-2">
