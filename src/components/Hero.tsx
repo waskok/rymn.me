@@ -1,42 +1,35 @@
-import { motion, type Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import type { StatItem } from '../types';
-import { easeOut } from '../lib/motion';
+import { easeOut, staggerContainer, staggerItem } from '../lib/motion';
 
 interface HeroProps {
   stats: readonly StatItem[];
 }
 
-const container: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
-  },
-};
-
 /** Secondary hero blocks only — never the LCP headline (opacity:0 delays Lighthouse LCP). */
-const item: Variants = {
-  hidden: { opacity: 0, y: 18 },
+const statsRow = {
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: easeOut },
+    transition: { duration: 0.85, ease: easeOut },
   },
 };
 
 export function Hero({ stats }: HeroProps) {
   return (
     <motion.section
-      variants={container}
+      variants={staggerContainer}
       initial="hidden"
       animate="show"
       className="relative z-20 mx-auto flex max-w-5xl flex-col items-start px-6 pt-6 pb-14 sm:px-10 sm:pt-10 sm:pb-20"
     >
       {/* Visible from first paint for LCP; only a short slide so it doesn't look static. */}
       <motion.h1
-        initial={{ y: 12 }}
+        initial={{ y: 14 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: easeOut }}
+        transition={{ duration: 0.7, ease: easeOut, delay: 0.12 }}
         className="font-display text-balance text-4xl leading-[1.08] font-medium tracking-tight text-white sm:text-6xl md:text-7xl"
       >
         Tworzę cyfrowe produkty,
@@ -48,14 +41,14 @@ export function Hero({ stats }: HeroProps) {
       </motion.h1>
 
       <motion.p
-        variants={item}
+        variants={staggerItem}
         className="mt-6 max-w-xl text-balance text-base leading-relaxed text-white/60 sm:text-lg"
       >
         Pracuję jako niezależny freelancer, w pełni skupiony na każdym projekcie. Poniżej zobaczysz kierunki, w których się rozwijam.
       </motion.p>
 
       <motion.div
-        variants={item}
+        variants={statsRow}
         className="mt-10 flex w-full flex-wrap items-center gap-x-6 gap-y-4 border-t border-white/10 pt-8 sm:gap-x-10"
       >
         {stats.map((stat) => (

@@ -15,6 +15,8 @@ export interface PortfolioGateway {
   tags: readonly string[];
   /** True while the dedicated portfolio isn't live yet — disables navigation and shows a "soon" state. */
   comingSoon?: boolean;
+  /** Live gateway with extra visual emphasis — glow, animated CTA, corner arrow. */
+  featured?: boolean;
 }
 
 /** A social / contact link rendered in the header and footer. */

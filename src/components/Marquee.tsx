@@ -1,4 +1,4 @@
-import { usePerformanceMode } from '../lib/usePerformanceMode';
+import { usePerformanceMode } from '../lib/performanceMode';
 
 interface MarqueeProps {
   tags: readonly string[];

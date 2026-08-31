@@ -5,7 +5,7 @@ import type { PortfolioGateway, SocialLink, StatItem } from '../types';
 /**
  * Central routing table for the hub. Each entry will eventually redirect to
  * a dedicated, fully-fledged portfolio living on its own subdomain. Until
- * those are live, `comingSoon` disables navigation and `url` is a placeholder.
+ * those are live, `comingSoon` disables navigation.
  */
 export const gateways: readonly PortfolioGateway[] = [
   {
@@ -18,7 +18,7 @@ export const gateways: readonly PortfolioGateway[] = [
     icon: Code2,
     url: 'https://dev.rymn.me',
     tags: ['React', 'TypeScript', 'Tailwind CSS'],
-    comingSoon: true,
+    featured: true,
   },
   {
     id: 'graphic',

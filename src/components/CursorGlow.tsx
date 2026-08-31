@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
-import { usePerformanceMode } from '../lib/usePerformanceMode';
+import { usePerformanceMode } from '../lib/performanceMode';
 
 /**
  * A soft radial spotlight that trails the cursor across the entire viewport.

@@ -3,7 +3,7 @@ import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { PortfolioGateway } from '../types';
 import { GatewayCard } from './GatewayCard';
-import { easeOut } from '../lib/motion';
+import { easeOut, tileContainer, tileItem } from '../lib/motion';
 
 interface GatewaysProps {
   gateways: readonly PortfolioGateway[];
@@ -53,7 +53,7 @@ export function Gateways({ gateways }: GatewaysProps) {
               initial={{ opacity: 0, x: direction >= 0 ? 32 : -32 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: direction >= 0 ? -32 : 32 }}
-              transition={{ duration: 0.35, ease: easeOut }}
+              transition={{ duration: 0.5, ease: easeOut }}
               drag="x"
               dragDirectionLock
               dragConstraints={{ left: 0, right: 0 }}
@@ -61,7 +61,7 @@ export function Gateways({ gateways }: GatewaysProps) {
               onDragEnd={handleDragEnd}
               className="cursor-grab active:cursor-grabbing"
             >
-              <GatewayCard gateway={gateways[activeIndex]} tall tilt={false} />
+              <GatewayCard gateway={gateways[activeIndex]} tall tilt={false} disableEntrance />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -101,14 +101,24 @@ export function Gateways({ gateways }: GatewaysProps) {
       </div>
 
       {/* Desktop: flagship gateway spans full width, the rest sit side by side */}
-      <div className="hidden gap-5 md:grid md:grid-cols-2">
+      <motion.div
+        className="hidden gap-5 md:grid md:grid-cols-2"
+        variants={tileContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.15 }}
+      >
         {gateways[0] && (
-          <GatewayCard key={gateways[0].id} gateway={gateways[0]} className="md:col-span-2" wide />
+          <motion.div variants={tileItem} className="md:col-span-2">
+            <GatewayCard key={gateways[0].id} gateway={gateways[0]} wide disableEntrance />
+          </motion.div>
         )}
-        {gateways.slice(1).map((gateway, i) => (
-          <GatewayCard key={gateway.id} gateway={gateway} tall delay={0.1 * (i + 1)} />
+        {gateways.slice(1).map((gateway) => (
+          <motion.div key={gateway.id} variants={tileItem}>
+            <GatewayCard gateway={gateway} tall disableEntrance />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 import { useRef, type PointerEvent, type ReactNode } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { usePerformanceMode } from '../lib/usePerformanceMode';
+import { usePerformanceMode } from '../lib/performanceMode';
 
 interface MagneticProps {
   children: ReactNode;

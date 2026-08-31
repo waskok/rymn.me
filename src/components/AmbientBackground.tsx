@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { usePerformanceMode } from '../lib/usePerformanceMode';
+import { usePerformanceMode } from '../lib/performanceMode';
 
 /**
  * Deep-black backdrop composed of three slow-drifting glow orbs and a

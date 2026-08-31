@@ -6,7 +6,7 @@ import { Magnetic } from './Magnetic';
 import { ContactButton } from './ContactButton';
 import { useLogoClick } from '../lib/useLogoClick';
 import { easeOut } from '../lib/motion';
-import { usePerformanceMode } from '../lib/usePerformanceMode';
+import { usePerformanceMode } from '../lib/performanceMode';
 
 function StatusPill({ reduceVisualEffects }: { reduceVisualEffects: boolean }) {
   return (

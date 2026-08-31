@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';
 
 export type ConsentStatus = 'accepted' | 'rejected';
 
@@ -17,18 +17,15 @@ interface CookieConsentContextValue {
 
 const CookieConsentContext = createContext<CookieConsentContextValue | null>(null);
 
-export function CookieConsentProvider({ children }: { children: ReactNode }) {
-  const [status, setStatus] = useState<ConsentStatus | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+function getStoredStatus(): ConsentStatus | null {
+  if (typeof window === 'undefined') return null;
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  return stored === 'accepted' || stored === 'rejected' ? stored : null;
+}
 
-  useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === 'accepted' || stored === 'rejected') {
-      setStatus(stored);
-    } else {
-      setIsVisible(true);
-    }
-  }, []);
+export function CookieConsentProvider({ children }: { children: ReactNode }) {
+  const [status, setStatus] = useState<ConsentStatus | null>(getStoredStatus);
+  const [isVisible, setIsVisible] = useState(() => getStoredStatus() === null);
 
   const persist = useCallback((next: ConsentStatus) => {
     window.localStorage.setItem(STORAGE_KEY, next);
