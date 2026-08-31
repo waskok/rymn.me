@@ -143,3 +143,18 @@ body {
 .text-balance {
   text-wrap: balance;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee,
+  .animate-ping,
+  .animate-support-pulse,
+  .animate-cta-glow,
+  .animate-shine,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
