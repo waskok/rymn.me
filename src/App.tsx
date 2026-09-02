@@ -17,9 +17,8 @@ const NotFound = lazy(() =>
 );
 
 /**
- * Personal hub for rymn.me. The home view has one job: introduce me in a
- * single memorable screen, then point visitors toward the dedicated
- * portfolios (web development, video editing, ...) as they come online.
+ * Main site for rymn.me — introduces services and routes visitors to
+ * dedicated portfolios (web development, design, video) as they come online.
  */
 function App() {
   return (

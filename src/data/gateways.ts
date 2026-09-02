@@ -3,9 +3,8 @@ import { GithubIcon, DiscordIcon } from '../components/icons';
 import type { PortfolioGateway, SocialLink, StatItem } from '../types';
 
 /**
- * Central routing table for the hub. Each entry will eventually redirect to
- * a dedicated, fully-fledged portfolio living on its own subdomain. Until
- * those are live, `comingSoon` disables navigation.
+ * Central routing table for portfolio gateways. Each entry links to a
+ * dedicated portfolio on its own subdomain. `comingSoon` disables navigation.
  */
 export const gateways: readonly PortfolioGateway[] = [
   {

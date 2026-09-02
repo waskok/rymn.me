@@ -3,7 +3,7 @@ import type { ComponentType, SVGProps } from 'react';
 /** Shape shared by every icon we render, whether from lucide-react or hand-drawn. */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
-/** A single destination the hub can redirect a visitor to. */
+/** A single portfolio gateway visitors can open from the home page. */
 export interface PortfolioGateway {
   id: string;
   index: string;

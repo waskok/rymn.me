@@ -1,4 +1,4 @@
-# Rymn Hub ✦ Personal Portfolio
+# rymn.me ✦ Personal Portfolio
 
 A modern, fast, dark-premium personal hub. This project is the main entry
 point (`rymn.me`) that routes visitors to dedicated, specialised portfolios

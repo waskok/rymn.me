@@ -6,10 +6,12 @@ import { Footer } from './Footer';
 import { CookieConsent } from './CookieConsent';
 import { CookieConsentProvider } from '../lib/cookieConsent';
 import { PerformanceModeProvider } from '../lib/performanceMode';
+import { usePageMeta } from '../lib/seo';
 import { socials } from '../data/gateways';
 
 /** Shared page shell - background, header and footer stay mounted across routes. */
 export function Layout() {
+  usePageMeta();
   return (
     <CookieConsentProvider>
       <PerformanceModeProvider>
