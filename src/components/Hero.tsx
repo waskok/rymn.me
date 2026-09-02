@@ -44,7 +44,7 @@ export function Hero({ stats }: HeroProps) {
         variants={staggerItem}
         className="mt-6 max-w-xl text-balance text-base leading-relaxed text-white/60 sm:text-lg"
       >
-        Pracuję jako niezależny freelancer, w pełni skupiony na każdym projekcie. Poniżej zobaczysz kierunki, w których się rozwijam.
+        rymn.me - indywidualna współpraca 1:1, bez agencji i pośredników. Poniżej zobaczysz kierunki, w których pracuję.
       </motion.p>
 
       <motion.div
